@@ -22,7 +22,12 @@ public partial class _Default : System.Web.UI.Page
 
 
         //Test database
-       
+        using (UserRepository us = new UserRepository()) {
+
+            User u = us.FindUser(UserName.Text,Password.Text);
+            if (u != null)
+                Response.Redirect("productlist.aspx");
+        } 
 
     }
 }
