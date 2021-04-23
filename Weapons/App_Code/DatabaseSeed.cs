@@ -25,9 +25,6 @@ public class DatabaseSeed
     {
 
         var connString = "Data Source=(local);Initial Catalog=Master;Integrated Security=true";
-
-
-        var connection = new System.Data.SqlClient.SqlConnection(connString);
         string txtDatabase = "weapons";
 
 
@@ -38,11 +35,11 @@ public class DatabaseSeed
         using (var conn = new System.Data.SqlClient.SqlConnection(connString))
         {
 
-            bool IsExits = CheckDatabaseExists(connection, "weapons"); //Check database exists in sql server.
+            bool IsExits = CheckDatabaseExists(conn, "weapons"); //Check database exists in sql server.
 
             if (IsExits)
             {
-                String sqlCommandText = @"ALTER DATABASE " + txtDatabase + @" SET SINGLE_USER WITH ROLLBACK IMMEDIATE;DROP DATABASE [" + txtDatabase + "]";
+                String sqlCommandText = @"ALTER DATABASE " + txtDatabase + @";DROP DATABASE [" + txtDatabase + "]";
                 Debug.WriteLine("Dropping");
                 var command = new System.Data.SqlClient.SqlCommand(sqlCommandText, conn);
                 command.Connection.Open();
@@ -54,60 +51,57 @@ public class DatabaseSeed
             Debug.WriteLine("Creating");
             String sqlcreate = "create database " + txtDatabase + ";";
             var cmd = new System.Data.SqlClient.SqlCommand(sqlcreate, conn);
-             cmd.Connection.Open();
-             cmd.ExecuteNonQuery();
+            cmd.Connection.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
 
         }
-        
-
-
-
-        /*  var sqlString = "SELECT * FROM ProductSubcategory ORDER BY Name";
-          using (var conn = new System.Data.SqlClient.SqlConnection(connString))
-          {
-
-              Debug.WriteLine("In here-....");
-              var command = new System.Data.SqlClient.SqlCommand(sqlString, conn);
-              command.Connection.Open();
-              command.ExecuteNonQuery();
-
-          }*/
-
-
-        /*String CreateDatabase;
-         string appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-      //   GrantAccess(appPath); //Need to assign the permission for current application to allow create database on server (if you are in domain).
-         bool IsExits = CheckDatabaseExists(connection, "weapons"); //Check database exists in sql server.
-
-         Debug.WriteLine(IsExits);
-
-         if (!IsExits)
-         {
-             CreateDatabase = "CREATE DATABASE " + txtDatabase + " ; ";
-             SqlCommand command = new SqlCommand(CreateDatabase, connection);
-             try
-             {
-                 connection.Open();
-                 command.ExecuteNonQuery();
-             }
-             catch (System.Exception ex)
-             {
-                 Debug.WriteLine(ex.StackTrace);
-             }
-             finally
-             {
-                 if (connection.State == ConnectionState.Open)
-                 {
-                     connection.Close();
-                 }
-             }
-
-         }
-        */
+        createTables();
     }
 
+    private static void createTables() {
+        string txtDatabase = "weapons";
+        var connString = "Data Source=(local);Initial Catalog="+txtDatabase+";Integrated Security=true";
+        using (var conn = new System.Data.SqlClient.SqlConnection(connString))
+        {
 
-    public static bool CheckDatabaseExists(SqlConnection tmpConn, string databaseName)
+            string sqlUserDBQuery = "create table users (userid int,username varchar(255),password varchar(255),firstname varchar(255));";
+            using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
+            {
+                sqlCmd.Connection.Open();
+                sqlCmd.ExecuteNonQuery();
+                sqlCmd.Connection.Close();
+
+
+
+
+            }
+
+            //insert user
+            sqlUserDBQuery = "insert into users(userid,username,password,firstname) values(1,'camr','1234','Camilla')";
+            using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
+            {
+                sqlCmd.Connection.Open();
+                sqlCmd.ExecuteNonQuery();
+                sqlCmd.Connection.Close();
+                conn.Close();
+
+
+
+
+            }
+
+        }
+
+
+
+
+
+
+
+        }
+
+        public static bool CheckDatabaseExists(SqlConnection tmpConn, string databaseName)
     {
         string sqlCreateDBQuery;
         bool result = false;
