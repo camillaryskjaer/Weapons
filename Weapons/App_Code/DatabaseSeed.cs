@@ -40,8 +40,8 @@ public class DatabaseSeed
             if (IsExits)
             {
                 String sqlCommandText = @"
-ALTER DATABASE " + txtDatabase + @" SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-DROP DATABASE [" + txtDatabase + "]";
+                ALTER DATABASE " + txtDatabase + @" SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+                DROP DATABASE [" + txtDatabase + "]";
                 Debug.WriteLine("Dropping");
                 var command = new System.Data.SqlClient.SqlCommand(sqlCommandText, conn);
                 command.Connection.Open();
