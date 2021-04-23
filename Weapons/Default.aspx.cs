@@ -25,8 +25,13 @@ public partial class _Default : System.Web.UI.Page
         using (UserRepository us = new UserRepository()) {
 
             User u = us.FindUser(UserName.Text,Password.Text);
-            if (u != null)
+            if (u != null) {
+
+                //brugeren skal logges ind
+                
                 Response.Redirect("productlist.aspx");
+
+            }
         } 
 
     }
