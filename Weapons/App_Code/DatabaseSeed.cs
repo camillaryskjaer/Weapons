@@ -66,7 +66,7 @@ public class DatabaseSeed
         var connString = "Data Source=(local);Initial Catalog="+txtDatabase+";Integrated Security=true";
         using (var conn = new System.Data.SqlClient.SqlConnection(connString))
         {
-
+            //test
             string sqlUserDBQuery = "create table users (userid int,username varchar(255),password varchar(255),firstname varchar(255));";
             using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
             {
