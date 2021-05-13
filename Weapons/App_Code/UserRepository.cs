@@ -18,6 +18,36 @@ public class UserRepository : IDisposable
         conn.Open();
     }
 
+    public List<Product> GetAllProduct()
+    {
+        string s = "select * from products";
+
+        Product p = null;
+        List<Product> prod = new List<Product>();
+        using (SqlCommand sqlCommand = new SqlCommand(s, conn))
+        {
+
+            using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+            {
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+
+                        p = new Product(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                        prod.Add(p);
+                    }
+                }
+               
+
+                    return prod;
+            }
+        }
+        return null;
+    }
+
+
+
     /// <summary>
     /// 
     /// </summary>
