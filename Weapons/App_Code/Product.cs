@@ -16,7 +16,7 @@ public class Product
 
     public Product(int id,string name, string desc, string img)
     {
-        id = id;
+        Id = id;
         Name = name;
         Img = img;
         Desc = desc;
