@@ -49,7 +49,7 @@ public class UserRepository : IDisposable
 
     public Product GetProduct(string id)
     {
-        string s = "select name from products where id="+id;
+        string s = "select name,img,description from products where id="+id;
 
         Product p = null;
 
@@ -62,11 +62,11 @@ public class UserRepository : IDisposable
             {
                 if (dataReader.HasRows)
                 {
-                    while (dataReader.Read())
+                    if (dataReader.Read())
                     {
 
                         //     p = new Product(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
-                        p = new Product(-1, dataReader.GetString(0), null, null);
+                        p = new Product(-1, dataReader.GetString(0), dataReader.GetString(2), dataReader.GetString(1));
 
                     }
                 }
@@ -75,7 +75,7 @@ public class UserRepository : IDisposable
                 return p;
             }
         }
-        return null;
+      
     }
 
 

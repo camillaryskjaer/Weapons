@@ -30,7 +30,8 @@ public partial class ProductView : System.Web.UI.Page
                 if ((p != null) )
                 {
                     ProductHeader.Text = p.Name;
-                   
+                    Image1.ImageUrl = "assets/img/" + p.Img;
+                    Description.Text = p.Desc;
 
                 }
             }
