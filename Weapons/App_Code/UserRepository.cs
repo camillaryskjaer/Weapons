@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -51,7 +52,9 @@ public class UserRepository : IDisposable
         string s = "select * from products where id="+id.ToString();
 
         Product p = null;
-      
+
+
+        Debug.WriteLine(s);
         using (SqlCommand sqlCommand = new SqlCommand(s, conn))
         {
 
