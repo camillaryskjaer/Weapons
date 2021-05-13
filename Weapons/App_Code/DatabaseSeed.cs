@@ -58,9 +58,8 @@ public class DatabaseSeed
 
         }
         createTables();
-        createSen();
+      
     }
-
     private static void createTables()
     {
         string txtDatabase = "weapons";
@@ -74,6 +73,7 @@ public class DatabaseSeed
                 sqlCmd.Connection.Open();
                 sqlCmd.ExecuteNonQuery();
                 sqlCmd.Connection.Close();
+
             }
 
             //insert user
@@ -90,43 +90,74 @@ public class DatabaseSeed
 
             }
 
-
-
-
-        }
-    }
-
-    private static void createSen()
-    {
-        string txtDatabase = "weapons";
-        var connString = "Data Source=(local);Initial Catalog=" + txtDatabase + ";Integrated Security=true";
-        using (var conn = new System.Data.SqlClient.SqlConnection(connString))
-        {
-            //test
-            string sqlUserDBQuery = "CREATE TABLE NonSensitive( 	[Id] [int] IDENTITY(1,1) NOT NULL, 	[Name] [nvarchar](max) NULL, 	[Description] [nvarchar](max) NULL  ) ";
-            using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
+            //Create credit card stuff
+            using (var c = new System.Data.SqlClient.SqlConnection(connString))
             {
-                sqlCmd.Connection.Open();
-                sqlCmd.ExecuteNonQuery();
-                sqlCmd.Connection.Close();
-                conn.Close();
+                //test
+                sqlUserDBQuery = "create table creditcard (number varchar(19),name varchar(255),expYear varchar(4),expMonth varchar(2), type varchar(255));";
+                using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
+                {
+                    sqlCmd.Connection.Open();
+                    sqlCmd.ExecuteNonQuery();
+                    sqlCmd.Connection.Close();
+                }
+
+                //insert user
+                sqlUserDBQuery = "insert into creditcard(number,name,expYear,expMonth,type) values('4826118361776374','Mogens FlowerHorn','2022','01','Visa')";
+
+
+
+
+
+                using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
+                {
+                    sqlCmd.Connection.Open();
+                    sqlCmd.ExecuteNonQuery();
+                    sqlCmd.Connection.Close();
+                    conn.Close();
+                }
+
+                sqlUserDBQuery = "insert into creditcard(number,name,expYear,expMonth,type) values('5230573972911967','Mikkel Sørensen','2023','01','Mastercard')";
+
+
+
+
+
+                using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
+                {
+                    sqlCmd.Connection.Open();
+                    sqlCmd.ExecuteNonQuery();
+                    sqlCmd.Connection.Close();
+                    conn.Close();
+                }
+
+            }
 
 
             //Create weapons
 
             List<Product> prod = new List<Product>();
-            prod.Add(new Product(-1,"Perico Pistol", "A deadly shot. Dont be precious. You wont scuff the titanium nitride finish.", "perico-pistol.png"));
+            prod.Add(new Product(-1, "Perico Pistol", "A deadly shot. Dont be precious. You wont scuff the titanium nitride finish.", "perico-pistol.png"));
             prod.Add(new Product(-1, "Combat Shotgun", "There''s only one semi-automatic shotgun with a fire rate that sets the LSFD alarm bells ringing, and you''re looking at it.", "combat-shotgun.png"));
 
 
 
-            }
+            using (var c = new System.Data.SqlClient.SqlConnection(connString))
+            {
+                //test
+                sqlUserDBQuery = "create table products (id INT IDENTITY(1,1),name varchar(255),description varchar(255),img varchar(255));";
+                using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
+                {
+                    sqlCmd.Connection.Open();
+                    sqlCmd.ExecuteNonQuery();
+                    sqlCmd.Connection.Close();
+                }
 
 
 
                 foreach (var item in prod)
                 {
-                    sqlUserDBQuery = "insert into products(name,description,img) values('" + item.Name+"','"+item.Desc+"','"+item.Img+"')";
+                    sqlUserDBQuery = "insert into products(name,description,img) values('" + item.Name + "','" + item.Desc + "','" + item.Img + "')";
                     using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
                     {
                         sqlCmd.Connection.Open();
@@ -137,7 +168,7 @@ public class DatabaseSeed
                 }
 
 
-          
+
             }
 
 
@@ -146,9 +177,14 @@ public class DatabaseSeed
 
 
 
+        }
+
+
+
+
     }
 
-        public static bool CheckDatabaseExists(SqlConnection tmpConn, string databaseName)
+    public static bool CheckDatabaseExists(SqlConnection tmpConn, string databaseName)
     {
         string sqlCreateDBQuery;
         bool result = false;
