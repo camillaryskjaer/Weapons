@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -18,6 +19,7 @@ public partial class ProductView : System.Web.UI.Page
         {
             string searchTerm = Request.QueryString["id"];
 
+            Debug.WriteLine("Søgeterm:"  +searchTerm);
 
 
             using (UserRepository us = new UserRepository())

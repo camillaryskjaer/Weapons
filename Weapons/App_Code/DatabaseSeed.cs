@@ -139,9 +139,15 @@ public class DatabaseSeed
             List<Product> prod = new List<Product>();
             prod.Add(new Product(-1, "Perico Pistol", "A deadly shot. Dont be precious. You wont scuff the titanium nitride finish.", "perico-pistol.png"));
             prod.Add(new Product(-1, "Combat Shotgun", "There''s only one semi-automatic shotgun with a fire rate that sets the LSFD alarm bells ringing, and you''re looking at it.", "combat-shotgun.png"));
-            prod.Add(new Product(-1, " Double - Action Revolver", " Because sometimes revenge is a dish best served six times, in quick succession, right between the eyes.", "double-action-revolver.png"));
+            prod.Add(new Product(-1, "Double - Action Revolver", " Because sometimes revenge is a dish best served six times, in quick succession, right between the eyes.", "double-action-revolver.png"));
 
-           
+            prod.Add(new Product(-1, "Stone Hatchet", "", "stone-hatchet.png"));
+
+            prod.Add(new Product(-1, "SMG Mk II", "Lightweight, compact, with a rate of fire to die very messily for: turn any confined space into a kill box at the click of a well-oiled trigger.", "mk2.png"));
+
+
+            
+
 
             using (var c = new System.Data.SqlClient.SqlConnection(connString))
             {

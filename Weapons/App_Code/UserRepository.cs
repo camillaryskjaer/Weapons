@@ -44,12 +44,12 @@ public class UserRepository : IDisposable
                     return prod;
             }
         }
-        return null;
+       
     }
 
-    public Product GetProduct(object id)
+    public Product GetProduct(string id)
     {
-        string s = "select * from products where id="+id.ToString();
+        string s = "select name from products where id="+id;
 
         Product p = null;
 
@@ -65,8 +65,9 @@ public class UserRepository : IDisposable
                     while (dataReader.Read())
                     {
 
-                        p = new Product(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
-                      
+                        //     p = new Product(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                        p = new Product(-1, dataReader.GetString(0), null, null);
+
                     }
                 }
 
