@@ -16,7 +16,7 @@ public class DatabaseSeed
         //
         // TODO: Add constructor logic here
         //
-        
+
 
     }
 
@@ -31,7 +31,7 @@ public class DatabaseSeed
 
         //Drop databasen
 
-        
+
         using (var conn = new System.Data.SqlClient.SqlConnection(connString))
         {
 
@@ -59,11 +59,13 @@ public class DatabaseSeed
 
         }
         createTables();
+        createSen();
     }
 
-    private static void createTables() {
+    private static void createTables()
+    {
         string txtDatabase = "weapons";
-        var connString = "Data Source=(local);Initial Catalog="+txtDatabase+";Integrated Security=true";
+        var connString = "Data Source=(local);Initial Catalog=" + txtDatabase + ";Integrated Security=true";
         using (var conn = new System.Data.SqlClient.SqlConnection(connString))
         {
             //test
@@ -73,10 +75,6 @@ public class DatabaseSeed
                 sqlCmd.Connection.Open();
                 sqlCmd.ExecuteNonQuery();
                 sqlCmd.Connection.Close();
-
-
-
-
             }
 
             //insert user
@@ -93,6 +91,32 @@ public class DatabaseSeed
 
             }
 
+
+
+
+        }
+    }
+
+    private static void createSen()
+    {
+        string txtDatabase = "weapons";
+        var connString = "Data Source=(local);Initial Catalog=" + txtDatabase + ";Integrated Security=true";
+        using (var conn = new System.Data.SqlClient.SqlConnection(connString))
+        {
+            //test
+            string sqlUserDBQuery = "CREATE TABLE NonSensitive( 	[Id] [int] IDENTITY(1,1) NOT NULL, 	[Name] [nvarchar](max) NULL, 	[Description] [nvarchar](max) NULL  ) ";
+            using (SqlCommand sqlCmd = new SqlCommand(sqlUserDBQuery, conn))
+            {
+                sqlCmd.Connection.Open();
+                sqlCmd.ExecuteNonQuery();
+                sqlCmd.Connection.Close();
+            }
+
+            
+
+
+
+
         }
 
 
@@ -101,9 +125,9 @@ public class DatabaseSeed
 
 
 
-        }
+    }
 
-        public static bool CheckDatabaseExists(SqlConnection tmpConn, string databaseName)
+    public static bool CheckDatabaseExists(SqlConnection tmpConn, string databaseName)
     {
         string sqlCreateDBQuery;
         bool result = false;
