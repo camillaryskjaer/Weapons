@@ -46,6 +46,34 @@ public class UserRepository : IDisposable
         return null;
     }
 
+    public Product GetProduct(object id)
+    {
+        string s = "select * from products where id="+id.ToString();
+
+        Product p = null;
+      
+        using (SqlCommand sqlCommand = new SqlCommand(s, conn))
+        {
+
+            using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+            {
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+
+                        p = new Product(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                      
+                    }
+                }
+
+
+                return p;
+            }
+        }
+        return null;
+    }
+
 
 
     /// <summary>

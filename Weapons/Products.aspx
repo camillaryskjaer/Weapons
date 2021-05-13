@@ -43,8 +43,10 @@
         <asp:Repeater ID="Repeater1" runat="server">
        
         <ItemTemplate>
+            
                  <div class="col-md-4">
               <div class="card mb-4 box-shadow">
+                  <a href="productview.aspx?id=<%# Eval("Id")%>">
                 <img class="card-img-top" src="assets/img/<%# Eval("Img")%>" alt="Card image cap">
                 <div class="card-body">
                   <p class="card-text"> '<%# Eval("Name")%></p>
@@ -52,10 +54,10 @@
                   
                     <small class="text-muted"><%# Eval("Desc")%></small>
                   </div>
-                </div>
+                </div> </a>
               </div>
             </div>
-        
+       
         </ItemTemplate>
      
     </asp:Repeater>
